@@ -27,7 +27,17 @@ public class HelloGame extends ApplicationAdapter {
 
 	@Override
 	public void render () { //render method is going to be called like 60 times/second. think of it as a flipbook and it's drawing a whole bunch on images really quickly.
-		if (Gdx.input.isKeyPressed(Input.Keys.UP)) { //it takes an integer as the key which will represent the UP arrow
+		move();
+
+        Gdx.gl.glClearColor(1, 0, 0, 1); //drawing a background color (red, green, blue, alpha(transparency)) -> this is a non transparent red
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //completely clearing whatever was drawn previously. -> turning it black and letting you redraw
+		batch.begin();
+		batch.draw(img, x, y);
+		batch.end();
+	}
+
+    void move() {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) { //it takes an integer as the key which will represent the UP arrow
             yVelocity = MAX_VELOCITY;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) { //if we do if, else if, else if...etc, we could not push the keys at the same time. so 4 if statements are needed
@@ -45,11 +55,5 @@ public class HelloGame extends ApplicationAdapter {
 
         xVelocity *= 0.9; //dampening
         yVelocity *= 0.9;
-
-        Gdx.gl.glClearColor(1, 0, 0, 1); //drawing a background color (red, green, blue, alpha(transparency)) -> this is a non transparent red
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); //completely clearing whatever was drawn previously. -> turning it black and letting you redraw
-		batch.begin();
-		batch.draw(img, x, y);
-		batch.end();
-	}
+    }
 }
